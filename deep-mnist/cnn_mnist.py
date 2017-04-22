@@ -21,9 +21,9 @@ def max_pool_2x2(x):
                           strides=[1, 2, 2, 1], padding='SAME')
 
 
-if __name__ == '__main__':
+def model():
 
-    mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
+    mnist = input_data.read_data_sets('../data/MNIST_data', one_hot=True)
 
     sess = tf.InteractiveSession()
 
@@ -78,3 +78,6 @@ if __name__ == '__main__':
         feed_dict={x: mnist.test.images, y_: mnist.test.labels,
                    keep_prob: 1.0}))
 
+
+if __name__ == '__main__':
+    model()
