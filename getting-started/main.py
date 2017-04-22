@@ -51,11 +51,44 @@ def graph_with_vars():
     W = tf.Variable([0.3], tf.float32)
     b = tf.Variable([-0.3], tf.float32)
     x = tf.placeholder(tf.float32)
-    linear_model = W * x + b
+    linear_model = W*x + b
     init = tf.global_variables_initializer()
     sess = tf.Session()
     sess.run(init)
     print(sess.run(linear_model, {x: [1, 2, 3, 4]}))
+
+
+def graph_with_vars_loss():
+    W = tf.Variable([0.3], tf.float32)
+    b = tf.Variable([-0.3], tf.float32)
+    x = tf.placeholder(tf.float32)
+    y = tf.placeholder(tf.float32)
+    linear_model = W*x + b
+    squared_deltas = tf.square(linear_model - y)
+    loss = tf.reduce_sum(squared_deltas)
+    init = tf.global_variables_initializer()
+    sess = tf.Session()
+    sess.run(init)
+    print(sess.run(loss, {x: [1, 2, 3, 4], y: [0, -1, -2, -3]}))
+
+
+def graph_with_assign():
+    W = tf.Variable([0.3], tf.float32)
+    b = tf.Variable([-0.3], tf.float32)
+    x = tf.placeholder(tf.float32)
+    y = tf.placeholder(tf.float32)
+    linear_model = W*x + b
+    squared_deltas = tf.square(linear_model - y)
+    loss = tf.reduce_sum(squared_deltas)
+    init = tf.global_variables_initializer()
+    sess = tf.Session()
+    sess.run(init)
+    print(sess.run(loss, {x: [1, 2, 3, 4], y: [0, -1, -2, -3]}))
+    fixW = tf.assign(W, [-1.])
+    fixb = tf.assign(b, [1.])
+    sess.run([fixW, fixb])
+    print(sess.run(loss, {x: [1, 2, 3, 4], y: [0, -1, -2, -3]}))
+ 
 
 
 if __name__ == '__main__':
@@ -65,3 +98,5 @@ if __name__ == '__main__':
     graph_add_ph()
     graph_add_triple_ph()
     graph_with_vars()
+    graph_with_vars_loss()
+    graph_with_assign()
